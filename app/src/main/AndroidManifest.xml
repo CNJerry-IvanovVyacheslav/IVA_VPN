@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+
 
     <application
         android:allowBackup="true"
@@ -22,14 +26,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- ✅ Твой кастомный сервис -->
         <service
-            android:exported="true"
+            android:name=".IvaVpnService"
+            android:exported="false"
             android:permission="android.permission.BIND_VPN_SERVICE"
-            android:name=".IvaVpnService">
+            android:foregroundServiceType="specialUse"
+            tools:targetApi="p">
             <intent-filter>
                 <action android:name="android.net.VpnService" />
             </intent-filter>
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="VPN" />
         </service>
-    </application>
 
+        <!-- ✅ Переопределяем сервис из библиотеки WireGuard -->
+        <service
+            android:name="com.wireguard.android.backend.GoBackend\$VpnService"
+            android:permission="android.permission.BIND_VPN_SERVICE"
+            android:exported="false" />
+
+    </application>
 </manifest>

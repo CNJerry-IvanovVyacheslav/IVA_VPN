@@ -11,4 +11,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Подключиться к VPN" />
+
+    <Button
+        android:id="@+id/stopVpnButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Отключиться" />
 </LinearLayout>
